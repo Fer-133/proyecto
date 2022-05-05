@@ -1,0 +1,150 @@
+:root {
+    --bordes: #d9d9d9;
+    --texto: #284b63;    
+    --fondo: #ffffff;    
+    --title: #d9d9d9;
+    --color5: #3c6e71;
+}
+
+.dark-theme{
+    color-scheme: dark;
+    --bordes: #284b63;
+    --texto: #d9d9d9;    
+    --fondo: #191A19;
+    --title: #3c6e71;
+    --color5: #8b8c89;
+}
+
+body {    
+    margin: 0px;
+    background-color: var(--fondo);
+}
+
+h1{    
+    margin-top: 0px;
+    text-align: center;
+    font-size: 180px;
+    color: var(--texto);    
+}
+
+@media screen and (max-width: 700px)/*, (max-height: 500px) */{
+    h1 {
+        font-size: 80px;
+    }
+}
+
+@media screen and (min-width: 701px) and (max-width: 800px)/* and (min-height: 501px) and (max-height: 600px) */{
+    h1 {
+        font-size: 120px;
+    }
+}
+
+@media screen and (min-width: 801px) and (max-width: 1000px)/* and (min-height: 601px) and (max-height: 700px) */{
+    h1 {
+        font-size: 130px;
+    }
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1200px)/* and (min-height: 701px) and (max-height: 800px) */{
+    h1 {
+        font-size: 150px;
+    }
+}
+
+@media screen and (min-width: 1201px)/* and (min-height: 801px) */{
+    h1 {
+        font-size: 180px;
+    }
+}
+
+#login form{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    border: 5px var(--bordes) solid;
+    transform: translate(-50%, -50%);
+    background-color: var(--color5);
+    border-radius: 5px;  
+    padding: 30px;  
+}
+
+/*#login*/ input[type="text"], /*#login*/ input[type="password"], input[type="email"] {
+    width: 200px;    
+    height: 20px;
+    font-size: 18px;    
+    margin: 10px;
+}
+
+/*#login*/ input[type="submit"], /*#login*/ button {
+    width: 208px;
+    height: 40px;
+    margin: 10px; 
+    font-weight: 600;
+    font-size: 18px;
+    background-color: var(--bordes);   
+    color: var(--texto); 
+    cursor: pointer;
+}
+
+button:hover, input[type="submit"]:hover{
+    background-color: var(--texto);
+    color: var(--bordes);
+}
+
+.popup {
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;    
+}
+
+.popup-content {
+    height: 400px;
+    width: 300px;    
+    padding: 20px;
+    border-radius: 5px;
+    border: 5px var(--bordes) solid;
+    background-color: var(--color5);
+    position: relative;
+}
+
+
+.options {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    /*width: 100%;*/
+    /*background-color: red;*/
+    color: white;
+    text-align: center;
+ }
+
+ .options a {     
+     padding: 10px;     
+     text-decoration: none;
+     opacity: 75%;
+ }
+
+ .options a:hover {     
+    padding: 10px;     
+    text-decoration: none;
+    opacity: 100%;
+}
+
+.options img {         
+    opacity: 75%;
+}
+
+.options img:hover {        
+   opacity: 100%;
+}
+
+.error {
+    color: yellow;
+    font-weight: bold;
+}
