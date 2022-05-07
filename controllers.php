@@ -235,14 +235,16 @@ if (isset($_POST["closeSession"])){
     }
     
     session_destroy();                
-    header("location: index.php");
+    //header("location: index.php");
+    header("location: /proyecto/index.php");    
     exit;
 }
 
 
 if (isset($_POST["deleteAccount"])) {
     deleteAccount($_SESSION["user"]);    
-    header("location: index.php");
+    //header("location: index.php");
+    header("location: /proyecto/index.php");
     exit;    
 }
 
