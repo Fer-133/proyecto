@@ -26,6 +26,12 @@
         "contactTheDevelopers" => "Contacta a los desarrolladores",
         "message" => "Mensaje",
         "subject" => "Asunto",
-        "send" => "Enviar"
+        "send" => "Enviar",
+        "resetAccount" => "Reiniciar cuenta",
+        "resetAccountSure" => "Si reinicias tu cuenta se borrarán tus habitos, tareas, recompensas y puntos.",
+        "uploadImage" => "Imagen de avatar:",
+        "saveImage" => "Guardar imagen",
+        "searchImage" => "Buscar imagen"
+
     );
 ?>

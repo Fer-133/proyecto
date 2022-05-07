@@ -28,7 +28,7 @@ if(!defined("IN_CONTROLLER")){
         
         <div id="login">
             <form action = "" method="post" onsubmit = "return validateLogIn()">
-                <input type="text" id="user" name="user" placeholder="<?= $lang['userField']?>"/>
+                <input type="text" id="user" name="user" placeholder="<?= $lang['userField']?>" autofocus/>
                 <label id="userError" class="error"></label><br/>
                 <input type="password" id="pass" name="pass" placeholder="<?= $lang['passField']?>"/>
                 <label id="passError" class="error"></label><br/>

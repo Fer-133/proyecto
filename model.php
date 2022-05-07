@@ -79,7 +79,7 @@ function register($userName, $email, $password, $language, $theme){
     $mysqli = dbConnection();
     $password = crypt($password, "123pass");
     $id = uniqid();
-    $sql = "INSERT INTO users VALUES ('$id', '$userName', '$email', '$password', 0, '$language', '$theme')";
+    $sql = "INSERT INTO users VALUES ('$id', '$userName', '$email', '$password', 0, '$language', '$theme', 'no')";
     $mysqli->query($sql);
 
     if ($mysqli->error) {
@@ -142,6 +142,32 @@ function saveOptions($user, $language, $theme) {
     return false;
 }
 
+//SetAvatar pone a si el uso de avatar
+function setAvatarExtension($user, $ext) {
+    $mysqli = dbConnection();    
+    $sql = "UPDATE users SET avatar = '$ext' WHERE userName='$user'";
+    $mysqli->query($sql);    
+}
+
+//GetAvatar Devuelve true si el usuario tiene avatar personalizado
+function getAvatarExtension($user) {
+    $avatar = "no";
+    $mysqli = dbConnection();    
+    $sql = "SELECT avatar FROM users WHERE userName = '$user'";
+    if ($results = $mysqli->query($sql)) {
+        if ($results->num_rows > 0) {
+            while ($result = $results->fetch_array()){
+                $avatar = $result["avatar"];
+            }
+        }
+    }
+    
+    if(strcmp($avatar, "no") == 0) {           
+        return false;
+    } else {        
+        return $avatar;
+    }
+}
 
 
 //Inserta un nuevo habito en la base de datos
@@ -312,6 +338,25 @@ function deleteAccount($name) {
     $mysqli = dbConnection();
     $sql = "DELETE FROM users WHERE userName = '$name'";
     $mysqli->query($sql);
+}
+
+//Resetea la cuenta del usuario
+function resetAccount($name) {
+    $mysqli = dbConnection();
+    $sql = "DELETE FROM daily_tasks WHERE owner = '$name'";
+    $mysqli->query($sql);
+
+    $sql = "DELETE FROM tasks WHERE owner = '$name'";
+    $mysqli->query($sql);
+
+    $sql = "DELETE FROM habits WHERE owner = '$name'";
+    $mysqli->query($sql);
+
+    $sql = "DELETE FROM rewards WHERE owner = '$name'";
+    $mysqli->query($sql);
+
+    $sql = "UPDATE users SET points = 0 WHERE userName = '$name'";    
+    $mysqli->query($sql);    
 }
 
 //Inserta un nuevo mensaje en la base de datos

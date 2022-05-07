@@ -234,20 +234,22 @@ if (isset($_POST["closeSession"])){
         );
     }
     
-    session_destroy();                
-    //header("location: index.php");
+    session_destroy();                    
     header("location: /proyecto/index.php");    
     exit;
 }
 
-
+//Borra la cuenta
 if (isset($_POST["deleteAccount"])) {
-    deleteAccount($_SESSION["user"]);    
-    //header("location: index.php");
+    deleteAccount($_SESSION["user"]);     
     header("location: /proyecto/index.php");
     exit;    
 }
 
+//Reinicia la cuenta
+if (isset($_POST["resetAccount"])) {
+    resetAccount($_SESSION["user"]);
+}
 
 //Controladores
 
@@ -314,6 +316,11 @@ function index_controller() {
 
 //CONTROLADOR DE PRUEBA
 function main_controller() { 
+
+    if(getAvatarExtension($_SESSION["user"])){
+        $_SESSION["avatar"] = "yes";
+        $_SESSION["avatarExtension"] = getAvatarExtension($_SESSION["user"]);
+    }
     
     require "templates/main/" . $_SESSION['lang'] . ".php";    
     require "validators.php";
@@ -412,6 +419,68 @@ function profile_controller(){
     if(isset($_POST["saveOptions"])){
         saveOptions($_SESSION["user"], $_POST["language"], $_POST["theme"]);
     }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //Procesamiento de la subida de la imagen de avatar
+    if(isset($_POST["saveImage"])) {
+        
+        $path = $_FILES["uploadedImage"]["name"];
+        $ext = "." . pathinfo($path, PATHINFO_EXTENSION);
+        
+        $target_dir = "./templates/uploads/";
+        //$target_file = $target_dir . basename($_FILES["uploadedImage"]["name"]);
+        $target_file = $target_dir . $_SESSION["user"] . $ext;
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        // Check if image file is a actual image or fake image
+        if(isset($_POST["saveImage"])) {
+            $check = getimagesize($_FILES["uploadedImage"]["tmp_name"]);
+            if($check !== false) {
+                echo "File is an image - " . $check["mime"] . ".";
+                $uploadOk = 1;
+            } else {
+                echo "File is not an image.";
+                $uploadOk = 0;
+            }
+        }
+
+        // Check if file already exists
+        /*
+        if (file_exists($target_file)) {
+            echo "Sorry, file already exists.";
+            $uploadOk = 0;
+        }
+        */
+
+        // Check file size
+        if ($_FILES["uploadedImage"]["size"] > 500000) {
+            echo "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+
+        // Allow certain file formats
+            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif" ) {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            echo "Sorry, your file was not uploaded.";
+        // if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["uploadedImage"]["tmp_name"], $target_file)) {
+                echo "The file ". htmlspecialchars( basename( $_FILES["uploadedImage"]["name"])). " has been uploaded.";
+                setAvatarExtension($_SESSION["user"], $ext);
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
+        }
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Procesamiento del envio de un mensaje a los desarrolladores
     if (isset($_POST["sendMessage"])) {

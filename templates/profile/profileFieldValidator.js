@@ -1,34 +1,3 @@
-/*validateUser acepta los parametros u y ur que son los elementos del DOM
-referentes al campo usuario y error (del registro o del login), si cumple
-la expresión regular devuelve true, sino la cumple devuelve false e introduce
-un mensaje de error*/
-
-/*
-NO ES NECESARIO POR AHORA
-
-function validateUser(u, ur) {
-    var ok = false;
-    var errorMessage = ""    ;
-    var user = u;
-    var error = ur;
-    
-    error.innerHTML = "";
-
-    if (/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9_.-]{3,15}$/.test(user)) {
-        ok = true;
-    } else {
-        errorMessage = "Este campo sólo admite letras y numeros con una longitud de entre 3 y 15 caracteres.";
-    }
-
-    if(ok) {
-        return true;
-    } else {
-        error.innerHTML = errorMessage;
-        return false;
-    }
-}
-*/
-
 /*validateEmail evalua el campo email, si cumple la expresión regular
 devuelve true, sino devuelve false y un mensaje de error*/
 function validateEmail() {

@@ -4,7 +4,7 @@ script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
 script.type = 'text/javascript';
 document.getElementsByTagName('head')[0].appendChild(script);
 
-//Mostrar/esconder popup de creacion de nueva recompensa
+//Mostrar/esconder popup del borrado de cuenta
 document.getElementById("deleteAccount").addEventListener("click", showDeleteAccount);
 document.getElementById("cancelDeleted").addEventListener("click", hideDeleteAccount);
 
@@ -14,6 +14,19 @@ function showDeleteAccount() {
 
 function hideDeleteAccount() {
     document.querySelector(".popup-deleteAccount").style.display = "none";    
+}
+
+
+//Mostrar/esconder popup del reseteo de cuenta
+document.getElementById("resetAccount").addEventListener("click", showResetAccount);
+document.getElementById("cancelReset").addEventListener("click", hideResetAccount);
+
+function showResetAccount() {
+    document.querySelector(".popup-resetAccount").style.display = "flex";
+}
+
+function hideResetAccount() {
+    document.querySelector(".popup-resettAccount").style.display = "none";    
 }
 
 

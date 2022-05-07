@@ -33,7 +33,7 @@ body {
     border-color: darkred;
 }
 
-.popup-deleteAccount{
+.popup-deleteAccount, .popup-resetAccount{
     background: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;
@@ -45,7 +45,7 @@ body {
     text-align: center;    
 }
 
-.popup-deleteAccount-content {
+.popup-deleteAccount-content, .popup-resetAccount-content {
     height: 180px;
     width: 360px;
     background-color:var(--fondo);
@@ -64,7 +64,7 @@ button, input[type="submit"] {
     cursor: pointer;
 }
 
-#updateInfo, #sessionAndAccount, #options, #contact {
+#updateInfo, #sessionAndAccount, #options, #contact, #image {
     border-top: 5px var(--bordes) solid;
     border-left: none;
     border-right: none;

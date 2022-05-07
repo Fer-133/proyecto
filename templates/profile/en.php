@@ -26,7 +26,12 @@
         "contactTheDevelopers" => "Contact the developers",
         "message" => "Message",
         "subject" => "Subject",
-        "send" => "Send"
+        "send" => "Send",
+        "resetAccount" => "Reset account",
+        "resetAccountSure" => "If you reset the account, all habits, tasks and points will be deleted.",
+        "uploadImage" => "Avatar image:",
+        "saveImage" => "Save image",
+        "searchImage" => "Search image"
 
     );
 ?>

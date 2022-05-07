@@ -18,11 +18,24 @@ if(!isset($_SESSION["user"])){
         <style>
             @import url(/proyecto/templates/profile/profile.css);
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
          <script src="/proyecto/templates/profile/profileFieldValidator.js"></script>
     </head>
     <body>
     <h1><?= $lang['thisIsProfile']?> <?= $_SESSION["user"]?></h1>
         <div id="main">
+
+            <div id="sessionAndAccount">
+                <h3><?= $lang['sessionAndAccount']?></h3>
+                <form action = "" method="POST">                        
+                        <input type = "submit" value="<?= $lang['closeSession']?>" name="closeSession"/>
+                        </br>                        
+                        <button type="button" id="resetAccount" class="reset"><?= $lang['resetAccount']?></button>
+                        </br>
+                        <button type="button" id="deleteAccount" class="delete"><?= $lang['deleteAccount']?></button>                        
+                </form>
+            </div>
+
             <div id="updateInfo">     
                 <h3><?= $lang['updateInfo']?></h3>
                 <form action = "" method="POST" onsubmit = "return validateInfoUpdate()">            
@@ -43,16 +56,7 @@ if(!isset($_SESSION["user"])){
                     <input type="submit" value="<?= $lang['updateInfo']?>" name="updateInfo"/>            
                 </form>
             </div>
-
-            <div id="sessionAndAccount">
-                <h3><?= $lang['sessionAndAccount']?></h3>
-                <form action = "" method="POST">
-                        <input type = "submit" value="<?= $lang['closeSession']?>" name="closeSession"/>
-                        </br>
-                        <button type="button" id="deleteAccount" class="delete"><?= $lang['deleteAccount']?></button>
-                </form>
-            </div>
-
+            
 
             <div id="options">
                 <h3><?= $lang['options']?></h3>
@@ -72,10 +76,25 @@ if(!isset($_SESSION["user"])){
                         <option id="dark" value="dark"><?= $lang['dark']?></option>                
                     </select>
 
-                    <br/>
-
                     <input type = "submit" value="<?= $lang['save']?>" name="saveOptions"/>
 
+                </form>
+            </div>
+
+            <div id="image">
+            <h3><?= $lang['uploadImage']?></h3>
+                <form class="image" action = "" method="POST" enctype="multipart/form-data">
+                    
+                    <label for="uploadedImage"><?= $lang['searchImage']?> </label>
+                    <input type="file" name="uploadedImage" id="uploadedImage" accept="image/*">
+
+                    <br/>
+                    <input type = "submit" value="<?= $lang['saveImage']?>" name="saveImage"/>
+                    
+                    <!--
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                        <input type="submit" value="Upload Image" name="submit">
+                    -->
                 </form>
             </div>
 
@@ -89,7 +108,10 @@ if(!isset($_SESSION["user"])){
                 </form>
                 <div id="messageError" class="error"></div>
             </div>
-        </div>    
+
+
+        </div>   
+        
 
             <div class="popup-deleteAccount">
                 <div class="popup-deleteAccount-content">
@@ -98,6 +120,17 @@ if(!isset($_SESSION["user"])){
                     <form action = "" method="POST">
                         <input id="confirmDelete" type = "submit" value="<?= $lang['deleteAccount']?>" name="deleteAccount"/>
                         <button type="button" id="cancelDeleted"><?= $lang['cancel']?></button>                        
+                    </form>
+                </div>
+            </div>
+
+            <div class="popup-resetAccount">
+                <div class="popup-resetAccount-content">
+                    <h3><?= $lang['resetAccountSure']?></h3>                                
+                    <h4 class="warning"><?= $lang['notReversed']?></h4>
+                    <form action = "" method="POST">
+                        <input id="confirmReset" type = "submit" value="<?= $lang['resetAccount']?>" name="resetAccount"/>
+                        <button type="button" id="cancelReset"><?= $lang['cancel']?></button>                        
                     </form>
                 </div>
             </div>

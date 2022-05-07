@@ -9,6 +9,15 @@ if(!isset($_SESSION["user"]) || isset($_POST["closeSession"]) /*|| isset($_POST[
     header("Location: /proyecto/templates/login/index.php");
     exit;
 } 
+
+$imgPath = "";
+if(isset($_SESSION["avatar"])){
+    if(strcmp($_SESSION["avatar"], "yes") == 0){
+        $imgPath = "/proyecto/templates/uploads/" . $_SESSION["user"] . $_SESSION["avatarExtension"];        
+    } else {
+        $imgPath = "/proyecto/templates/img/profile3.png";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,9 +35,9 @@ if(!isset($_SESSION["user"]) || isset($_POST["closeSession"]) /*|| isset($_POST[
     <body>
         <header>
             <h1>Do it - Tick it</h1>
-            <a href = "./profile?lang=<?= $_SESSION["lang"] ?>" ><!--<?= $lang['profile']?>--> <img src="/proyecto/templates/img/profile3.png"  width="50" height="50"> </a>
+            <a href = "./profile?lang=<?= $_SESSION["lang"] ?>" ><!--<?= $lang['profile']?>--> <img src= <?= $imgPath ?>  width="50" height="50"> </a>
             <h2><?= $lang['welcome']?> <?= $_SESSION["user"]?></h2> 
-            <h3><?= $lang['points']?> <div id='points'></div></h3>
+            <h3><?= $lang['points']?> <div id='points'></div></h3>            
         </header>
         
         <main>        
