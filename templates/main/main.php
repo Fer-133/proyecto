@@ -62,7 +62,7 @@ if(!isset($_SESSION["user"]) || isset($_POST["closeSession"]) /*|| isset($_POST[
         </main>
        
 
-        <!--POPUP DE HABITOS-->
+        <!--POPUP DE CREACION DE HABITOS-->
         <div class="popup-habit">
             <div class="popup-habit-content">
                 <h3><?= $lang['newHabit']?></h3>                                
@@ -86,7 +86,7 @@ if(!isset($_SESSION["user"]) || isset($_POST["closeSession"]) /*|| isset($_POST[
         </div>
 
 
-        <!--POPUP DE TAREAS-->
+        <!--POPUP DE CREACION DE TAREAS-->
         <div class="popup-task">
             <div class="popup-task-content">
                 <h3><?= $lang['newTask']?></h3>                                
@@ -107,7 +107,7 @@ if(!isset($_SESSION["user"]) || isset($_POST["closeSession"]) /*|| isset($_POST[
             </div>
         </div>
 
-        <!--POPUP DE TAREAS DIARIAS-->        
+        <!--POPUP DE TAREAS CREACION DE DIARIAS-->        
         <div class="popup-dailyTask">
             <div class="popup-dailyTask-content">
                 <h3><?= $lang['newDailyTask']?></h3>                                
@@ -128,7 +128,7 @@ if(!isset($_SESSION["user"]) || isset($_POST["closeSession"]) /*|| isset($_POST[
         </div>
 
 
-        <!--POPUP DE RECOMPENSAS-->
+        <!--POPUP DE CREACION DE RECOMPENSAS-->
         <div class="popup-reward">
             <div class="popup-reward-content">
                 <h3><?= $lang['newReward']?></h3>                                
@@ -145,6 +145,99 @@ if(!isset($_SESSION["user"]) || isset($_POST["closeSession"]) /*|| isset($_POST[
             </div>
         </div>
         
+
+
+
+
+
+        <!--POPUP DE MODIFICACION DE HABITOS-->
+        <div class="popup-habit-editor">
+            <div class="popup-habit-editor-content">
+                <h3><?= $lang['editHabit']?></h3>                                
+                <form id="editHabitForm" action = "" method="POST" onsubmit = "return validateHabitEdition();">
+                    <label for="newHabitName"><?= $lang['name']?> </label>
+                    <input type="text" name="newHabitName" id="newHabitName" maxlength = 40 required>
+                    <!--<div id="habitError"></div><br/>-->
+                    <label for="newHabitType"><?= $lang['type']?> </label>
+                    <select name="newHabitType" id="newHabitType">
+                        <option value=1><?= $lang['positive']?></option>
+                        <option value=2><?= $lang['negative']?></option>
+                        <option value=3><?= $lang['neutral']?></option>
+                    </select> 
+                    <label for="newHabitPoints"><?= $lang['rewardPoints']?> </label>
+                    <input type="number" id="newHabitPoints" name="newHabitPoints" min="1" value="1" required>
+                    <input type="hidden" id="habitId" name="habitId" value="">
+                    <input type="submit" id="editHabit" value="<?= $lang['edit']?>" name="editHabit">
+                    <button type="button" id="cancelHabitEdition"><?= $lang['cancel']?></button>                    
+                </form>
+                <div id="habitEditionError" class="error"></div>
+            </div>
+        </div>
+
+        <!--POPUP DE MODIFICACION DE TAREAS-->
+        <div class="popup-task-editor">
+            <div class="popup-task-editor-content">
+                <h3><?= $lang['editTask']?></h3>                                
+                <form id="editTaskForm" action = "" method="POST" onsubmit = "return validateTaskEdition();">
+                    <label for="newTaskName"><?= $lang['name']?> </label>
+                    <input type="text" name="newTaskName" id="newTaskName" required>
+                    <!--<div id="taskNameError"></div><br/>-->
+                    <label for="newTaskDescription"><?= $lang['description']?> </label>
+                    <textarea name="newTaskDescription" id="newTaskDescription" maxlength=150></textarea>
+                    <!--<div id="taskDescriptionError"></div><br/>-->
+                    <label for="newTaskPoints"><?= $lang['rewardPoints']?> </label>
+                    <input type="number" id="newTaskPoints" name="newTaskPoints" min="1" value="1" required>
+                    <input type="hidden" id="taskId" name="taskId" value="">
+                    <input type="submit" id="editTask" value="<?= $lang['edit']?>" name="editTask">
+                    <button type="button" id="cancelTaskEdition"><?= $lang['cancel']?></button>                    
+                </form>
+                
+                <div id="taskEditionError" class="error"></div>
+            </div>
+        </div>
+
+        <!--POPUP DE TAREAS CREACION DE DIARIAS-->        
+        <div class="popup-dailyTask-editor">
+            <div class="popup-dailyTask-editor-content">
+                <h3><?= $lang['editDailyTask']?></h3>                                
+                <form id="editDailyTaskForm" action = "" method="POST" onsubmit = "return validateDailyTaskEdition();">
+                    <label for="newDailyTaskName"><?= $lang['name']?> </label>
+                    <input type="text" name="newDailyTaskName" id="newDailyTaskName" required>
+                    <!--<div id="dailyTaskNameError"></div>-->
+                    <label for="newDailyTaskDescription"><?= $lang['description']?> </label>
+                    <textarea name="newDailyTaskDescription" id="newDailyTaskDescription" maxlength=150></textarea>
+                    <!--<div id="dailyTaskDescriptionError"></div>-->
+                    <label for="newDailyTaskPoints"><?= $lang['rewardPoints']?> </label>
+                    <input type="number" id="newDailyTaskPoints" name="newDailyTaskPoints" min="1" value="1" required>
+                    <input type="hidden" id="dailyTaskId" name="dailyTaskId" value="">
+                    <input type="submit" id="editDailyTask" value="<?= $lang['edit']?>" name="editDailyTask">
+                    <button type="button" id="cancelDailyTaskEdition"><?= $lang['cancel']?></button>
+                </form>        
+                <div id="dailyTaskEditionError" class="error"></div>                  
+            </div>
+        </div>
+
+        <!--POPUP DE MODIFICACION DE RECOMPENSAS-->
+        <div class="popup-reward-editor">
+            <div class="popup-reward-editor-content">
+                <h3><?= $lang['editReward']?></h3>                                
+                <form id="editRewardForm" action = "" method="POST" onsubmit = "return validateRewardEdition();">
+                    <label for="newRewardName"><?= $lang['name']?> </label>
+                    <input type="text" name="newRewardName" id="newRewardName" required maxlength = 40>
+                    <!--<div id="rewardNameError"></div>-->                                      
+                    <label for="newRewardPrice"><?= $lang['price']?> </label>
+                    <input type="number" id="newRewardPrice" name="newRewardPrice" min="1" value="1" required>
+                    <input type="hidden" id="rewardId" name="rewardId" value="">
+                    <input type="submit" id="editReward" value="<?= $lang['edit']?>" name="editReward">
+                    <button type="button" id="cancelRewardEdition"><?= $lang['cancel']?></button>
+                </form>    
+                <div id="rewardNameEditionError" class="error"></div>
+            </div>
+        </div>
+
+
+
+
         <script src="/proyecto/templates/main/mainFuncionality.js"></script>
     </body>
 </html>

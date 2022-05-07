@@ -20,6 +20,11 @@
         "cancel" => "Cancel",
         "description" => "Description: ",
         "price" => "Price:",
-        "accept" => "Accept"
+        "accept" => "Accept",
+        "editHabit" => "Edit habit",
+        "edit" => "Edit",
+        "editTask" => "Edit task",
+        "editDailyTask" => "Edit daily task",
+        "editReward" => "Edit reward"
     );
 ?>

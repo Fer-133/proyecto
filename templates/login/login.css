@@ -148,3 +148,8 @@ button:hover, input[type="submit"]:hover{
     color: yellow;
     font-weight: bold;
 }
+
+.fieldError {
+    border: 2px solid red;
+    border-radius: 4px;
+}

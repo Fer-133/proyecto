@@ -44,12 +44,44 @@ function validateHabit() {
     }       
 }
 
+/*validateHabitEdition devuelve true si los campos de la modificacion del habito cumplen los requisitos
+y false si no los cumplen*/
+function validateHabitEdition() {  
+    var habitName = document.getElementById("newHabitName").value;
+    var error = document.getElementById("habitEditionError");   
+
+    var okText = validateText(habitName, error);    
+        
+    if (okText) {        
+        return true;
+    } else {
+        return false;
+    }       
+}
+
 /*validateTask devuelve true si los campos de la nueva tarea cumplen los requisitos
 y false si no los cumplen*/
 function validateTask() {  
     var taskName = document.getElementById("taskName").value;
     var taskDescription = document.getElementById("taskDescription").value;    
     var error = document.getElementById("taskError");
+
+    var okName = validateText(taskName, error);    
+    var okDescription = validateText(taskDescription, error);        
+        
+    if (okName && okDescription) {        
+        return true;
+    } else {
+        return false;
+    }       
+}
+
+/*validateTaskEdition devuelve true si los campos de la tarea modificada cumplen los requisitos
+y false si no los cumplen*/
+function validateTaskEdition() {  
+    var taskName = document.getElementById("newTaskName").value;
+    var taskDescription = document.getElementById("newTaskDescription").value;    
+    var error = document.getElementById("taskEditionError");
 
     var okName = validateText(taskName, error);    
     var okDescription = validateText(taskDescription, error);        
@@ -80,11 +112,44 @@ function validateDailyTask() {
 }
 
 
+/*validateDailyTaskEdition devuelve true si los campos de la tarea diaria modificada cumplen los requisitos
+y false si no los cumplen*/
+function validateDailyTaskEdition() {  
+    var dailyTaskName = document.getElementById("newDailyTaskName").value;
+    var dailyTaskDescription = document.getElementById("newDailyTaskDescription").value;
+    var error = document.getElementById("dailyTaskEditionError");   
+
+    var okName = validateText(dailyTaskName, error);    
+    var okDescription = validateText(dailyTaskDescription, error);    
+        
+    if (okName && okDescription) {        
+        return true;
+    } else {
+        return false;
+    }       
+}
+
+
 /*validateReward devuelve true si los campos de la nueva recompensa cumplen los requisitos
 y false si no los cumplen*/
 function validateReward() {  
     var rewardName = document.getElementById("rewardName").value;
     var errorName = document.getElementById("rewardNameError");   
+
+    var okName = validateText(rewardName, errorName);    
+        
+    if (okName) {        
+        return true;
+    } else {
+        return false;
+    }       
+}
+
+/*validateRewardEdition devuelve true si los campos de la recompensa modificada cumplen los requisitos
+y false si no los cumplen*/
+function validateRewardEdition() {  
+    var rewardName = document.getElementById("newRewardName").value;
+    var errorName = document.getElementById("rewardNameEditionError");   
 
     var okName = validateText(rewardName, errorName);    
         

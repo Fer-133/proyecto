@@ -20,6 +20,11 @@
         "cancel" => "Cancelar",
         "description" => "Descripcion: ",
         "price" => "Precio:",
-        "accept" => "Aceptar"
+        "accept" => "Aceptar",
+        "editHabit" => "Editar habito",
+        "edit" => "Editar",
+        "editTask" => "Editar tarea",
+        "editDailyTask" => "Editar tarea diaria",
+        "editReward" => "Modificar recompensa"
     );
 ?>

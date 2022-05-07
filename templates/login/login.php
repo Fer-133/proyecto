@@ -13,6 +13,7 @@ if(!defined("IN_CONTROLLER")){
         <style>
             @import url(/proyecto/templates/login/login.css);
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <script src="/proyecto/templates/login/loginFieldValidator.js"></script>
     </head>
     <body>
@@ -35,9 +36,7 @@ if(!defined("IN_CONTROLLER")){
                 <button type="button" id="createAccount"><?= $lang['createAccountButton']?></button>
             </form>
         </div>
-        <!--ENVIAR POR POST - CODIFICAR CONTRASEÑA-->
 
-        
         <div class="popup">
             <div id="popup-content" class="popup-content">
                 <form action = "" method="post" onsubmit = "return validateRegistration()">
@@ -57,9 +56,7 @@ if(!defined("IN_CONTROLLER")){
                     <button type="button" id="cancel"><?= $lang['cancel']?></button>
                 </form>
             </div>
-        </div>       
-
-        
+        </div>    
 
         <script src="/proyecto/templates/login/loginFuncionality.js"></script> 
     </body>

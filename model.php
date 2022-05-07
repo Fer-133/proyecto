@@ -152,6 +152,14 @@ function insertHabit($name, $type, $points, $owner) {
     $mysqli->query($sql);
 }
 
+//Modifica un habito en la base de datos
+function editHabit($name, $type, $points, $id) {    
+    $mysqli = dbConnection();  
+    $sql = "UPDATE habits SET name = '$name', type = '$type', points = '$points' WHERE id = '$id'";
+    $mysqli->query($sql);   
+}
+
+
 //Devuelve todos los habitos de un usuario
 function getHabits($owner) {
     $mysqli = dbConnection();
@@ -168,14 +176,8 @@ function deleteHabit($id) {
     $sql = "DELETE FROM `habits` WHERE id = '$id'";
     $mysqli->query($sql);
 }
-/*
-//Modifica el habito pasado por parametro de la base de datos
-function updateHabit($id, $name, $type) {
-    $mysqli = dbConnection(); 
-    $sql = "UPDATE habits SET name = '$name', type = '$type' WHERE id='$id'";	   
-    $mysqli->query($sql);
-}
-*/
+
+
 //Obtiene los puntos del usuario
 function getPoints($userName) {
     $mysqli = dbConnection();
@@ -206,6 +208,13 @@ function insertTask($name, $description, $points, $owner) {
     $mysqli->query($sql);
 }
 
+//Modifica una tarea en la base de datos
+function editTask($name, $description, $points, $id) {    
+    $mysqli = dbConnection();  
+    $sql = "UPDATE tasks SET name = '$name', description = '$description', points = '$points' WHERE id = '$id'";
+    $mysqli->query($sql);   
+}
+
 //Devuelve todas las tareas de un usuario
 function getTasks($owner) {
     $mysqli = dbConnection();
@@ -232,6 +241,15 @@ function insertDailyTask($name, $description, $points, $owner) {
     $sql = "INSERT INTO daily_tasks VALUES ('$id', '$name', '$description', '$points', '$lastCheck', 0, '$owner')";
     $mysqli->query($sql);
 }
+
+
+//Modifica una tarea en la base de datos
+function editDailyTask($name, $description, $points, $id) {    
+    $mysqli = dbConnection();  
+    $sql = "UPDATE daily_tasks SET name = '$name', description = '$description', points = '$points' WHERE id = '$id'";
+    $mysqli->query($sql);   
+}
+
 
 //Devuelve todas las tareas diarias de un usuario
 function getDailyTasks($owner) {
@@ -265,6 +283,13 @@ function insertReward($name, $price, $owner) {
     $mysqli->query($sql);    
 }
 
+//modifica una recompensa en la base de datos
+function editReward($name, $price, $id) {    
+    $mysqli = dbConnection();
+    $sql = "UPDATE rewards SET name = '$name', price = '$price' WHERE id = '$id'";    
+    $mysqli->query($sql);    
+}
+
 //Devuelve todas las recompensas de un usuario
 function getRewards($owner) {
     $mysqli = dbConnection();
@@ -288,7 +313,7 @@ function deleteAccount($name) {
     $sql = "DELETE FROM users WHERE userName = '$name'";
     $mysqli->query($sql);
 }
-//////////////////////////////////////////////////////////////////////////////////////
+
 //Inserta un nuevo mensaje en la base de datos
 function insertMessage($subject, $message, $owner) {    
     $id = uniqid("hgf");

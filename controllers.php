@@ -9,6 +9,27 @@ if(!isset($_SESSION["lang"])){
 
 
 require_once("model.php");
+//Busca el nombre del usuario en la base de datos y si lo encuentra devuelve un aviso a login
+if(isset($_GET["nuser"])) {
+    $name = $_GET["nuser"];    
+    if (checkUserDuplicity($name)) {
+        echo "Ya existe una cuenta con ese nombre";
+    } else {
+        return null;
+        //echo "";
+    }
+}
+
+//Busca el orreo en la base de datos y si lo encuentra devuelve un aviso a login
+if(isset($_GET["email"])) {
+    $email = $_GET["email"];    
+    if (checkEmailDuplicity($email)) {
+        echo "Ya existe una cuenta con ese email";
+    } else {
+        echo "";
+    }
+}
+
 
 //Es pedido asincronamente desde main para devolver los habitos a main pedidos por ajax
 if (isset($_GET["loadHabits"])){    
@@ -17,7 +38,7 @@ if (isset($_GET["loadHabits"])){
     while ($habit = $habits->fetch_array()){  
         echo "<div class='habit'>";
         echo "<div>";
-        echo "<div class='name'>" . $habit["name"] . "</div>"; 
+        echo "<div class='name' value='" . $habit["id"] . "'>" . $habit["name"] . "</div>"; 
         echo "<div>Puntos: <div class='point'>" . $habit["points"] . "</div></div>";         
         echo "</div>";
                 
@@ -54,7 +75,7 @@ if (isset($_GET["loadTasks"])){
     while ($task = $tasks->fetch_array()){         
         echo "<div class='task'>";  
         echo "<div>";      
-        echo "<div class='name'>" . $task["name"] . "</div>"; 
+        echo "<div class='name' value='" . $task["id"] . "'>" . $task["name"] . "</div>"; 
         echo "<div class='description'>" . $task["description"] . "</div>";         
         echo "<div>Puntos: <div class='point'>" . $task["points"] . "</div></div>";        
         echo "</div>";
@@ -77,7 +98,7 @@ if (isset($_GET["loadDailyTasks"])){
     while ($dailyTask = $dailyTasks->fetch_array()){         
         echo "<div class='dailyTask'>";        
         echo "<div>";
-        echo "<div class='name'>" . $dailyTask["name"] . "</div>"; 
+        echo "<div class='name' value='" . $dailyTask["id"] . "'>" . $dailyTask["name"] . "</div>"; 
         echo "<div class='description'>" . $dailyTask["description"] . "</div>"; 
         echo "<div>Puntos: <div class='point'>" . $dailyTask["points"] . "</div></div>";
 
@@ -113,7 +134,7 @@ if (isset($_GET["loadRewards"])){
         while ($reward = $rewards->fetch_array()){        
             echo "<div class='reward'>";
             echo "<div>";
-            echo "<div class='name'>" . $reward["name"] . "</div>";            
+            echo "<div class='name' value='" . $reward["id"] . "'>" . $reward["name"] . "</div>";            
             echo "<div>Precio: <div class='price'>" . $reward["price"] . "</div></div>";
             echo "</div>";
 
@@ -201,8 +222,7 @@ if (isset($_POST["deleteReward"])){
     }    
 }
 
-
-
+//Cerrar la sesion
 if (isset($_POST["closeSession"])){
     $_SESSION = array();
     
@@ -302,8 +322,15 @@ function main_controller() {
         if (isValidText($_POST["habitName"])) {
             insertHabit($_POST["habitName"], $_POST["habitType"], $_POST["habitPoints"],$_SESSION["user"]);
         }
-    }    
-
+    }  
+    
+    //Procesamiento de la modificacion de un habito
+    if (isset($_POST["editHabit"])) {        
+        if (isValidText($_POST["newHabitName"])) {
+            editHabit($_POST["newHabitName"], $_POST["newHabitType"], $_POST["newHabitPoints"],$_POST["habitId"]);                        
+        }
+    } 
+    
 
     //Procesamiento de la creación de una tarea
     if (isset($_POST["createTask"])) {
@@ -312,6 +339,14 @@ function main_controller() {
         }
     }
 
+    //Procesamiento de la modificacion de una tarea
+    if (isset($_POST["editTask"])) {        
+        if (isValidText($_POST["newTaskName"]) && isValidText($_POST["newTaskDescription"])) {
+            editTask($_POST["newTaskName"], $_POST["newTaskDescription"], $_POST["newTaskPoints"],$_POST["taskId"]);                        
+        }
+    } 
+
+
     //Procesamiento de la creación de una tarea diaria
     if (isset($_POST["createDailyTask"])) {
         if (isValidText($_POST["dailyTaskName"]) && isValidText($_POST["dailyTaskDescription"])) {            
@@ -319,10 +354,25 @@ function main_controller() {
         }
     }
 
+    //Procesamiento de la modificacion de una tarea diaria
+    if (isset($_POST["editDailyTask"])) {        
+        if (isValidText($_POST["newDailyTaskName"]) && isValidText($_POST["newDailyTaskDescription"])) {
+            editDailyTask($_POST["newDailyTaskName"], $_POST["newDailyTaskDescription"], $_POST["newDailyTaskPoints"],$_POST["dailyTaskId"]);                        
+        }
+    } 
+
+
     //Procesamiento de la creación de una recompensa
     if (isset($_POST["createReward"])) {
         if (isValidText($_POST["rewardName"])) {
             insertReward($_POST["rewardName"], $_POST["rewardPrice"], $_SESSION["user"]);
+        }
+    }
+
+    //Procesamiento de la modificacion de una recompensa
+    if (isset($_POST["editReward"])) {
+        if (isValidText($_POST["newRewardName"])) {
+            editReward($_POST["newRewardName"], $_POST["newRewardPrice"], $_POST["rewardId"]);
         }
     }
 
@@ -361,8 +411,6 @@ function profile_controller(){
         saveOptions($_SESSION["user"], $_POST["language"], $_POST["theme"]);
     }
 
-
-    ///////////////////////////////////////////////////////////////////////////////////////////
     //Procesamiento del envio de un mensaje a los desarrolladores
     if (isset($_POST["sendMessage"])) {
         if (isValidText($_POST["subject"]) && isValidText($_POST["message"])) {
