@@ -12,6 +12,7 @@ if(!defined("IN_CONTROLLER")){
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <style>
             @import url(/proyecto/templates/login/login.css);
+            @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <script src="/proyecto/templates/login/loginFieldValidator.js"></script>
@@ -20,18 +21,18 @@ if(!defined("IN_CONTROLLER")){
         <h1>Do it - Tick it</h1>
 
         <div class="options">
-            <a href="index.php?lang=es"> <img src="/proyecto/templates/img/spanish.png"  width="50" height="34"> </a>
-            <a href="index.php?lang=en"> <img src="/proyecto/templates/img/english.png"  width="50" height="34"> </a>
+            <a href="index.php?lang=es"> <img src="/proyecto/img/spanish.png"  width="50" height="34"> </a>
+            <a href="index.php?lang=en"> <img src="/proyecto/img/english.png"  width="50" height="34"> </a>
             
-            <img id="color" src="/proyecto/templates/img/moon.png" width="30" height="30">
+            <img id="color" src="/proyecto/img/moon.png" width="30" height="30">
         </div>
         
         <div id="login">
             <form action = "" method="post" onsubmit = "return validateLogIn()">
                 <input type="text" id="user" name="user" placeholder="<?= $lang['userField']?>" autofocus/>
-                <label id="userError" class="error"></label><br/>
+                <!--<div id="userError" class="error"></div><br/>-->
                 <input type="password" id="pass" name="pass" placeholder="<?= $lang['passField']?>"/>
-                <label id="passError" class="error"></label><br/>
+                <!--<div id="passError" class="error"></div><br/>-->
                 <input type="submit" value="<?= $lang['loginButton']?>" name="logIn" id="logIn"/><br/>
                 <button type="button" id="createAccount"><?= $lang['createAccountButton']?></button>
             </form>
@@ -52,7 +53,7 @@ if(!defined("IN_CONTROLLER")){
                     <input type="password" id="cpass" name="cpass" placeholder="<?= $lang['confirmPassword']?>" required="required"/>
                     <div id="cpassError" class="error"></div>
 
-                    <input type="submit" value="<?= $lang['singUp']?>" name="register"/>
+                    <input type="submit" value="<?= $lang['singUp']?>" name="register"/><br/>
                     <button type="button" id="cancel"><?= $lang['cancel']?></button>
                 </form>
             </div>

@@ -69,9 +69,10 @@ function updateUser($user, $email, $password) {
         $password = crypt($password, "123pass");   
         $sql = "UPDATE users SET password = '$password', email = '$email'  WHERE userName='$user'";
     }
-
-    echo "Pasa";
-    $mysqli->query($sql);
+    
+    if($mysqli->query($sql)){
+        return true;
+    }
 }
 
 //Register guarda un nuevo usuario en la base de datos
@@ -81,7 +82,7 @@ function register($userName, $email, $password, $language, $theme){
     $id = uniqid();
     $sql = "INSERT INTO users VALUES ('$id', '$userName', '$email', '$password', 0, '$language', '$theme', 'no')";
     $mysqli->query($sql);
-
+/*
     if ($mysqli->error) {
         echo "<script type='text/javascript'>alert('INSERCCION INCORRECTA');</script>";
     } else {
@@ -91,6 +92,7 @@ function register($userName, $email, $password, $language, $theme){
             echo "<script type='text/javascript'>alert('USUARIO REGISTRADO');</script>";
         }
     }    
+    */
 }
 
 //login compruebo del login
@@ -261,8 +263,7 @@ function deleteTask($id) {
 //Inserta una nueva tarea diaria en la base de datos
 function insertDailyTask($name, $description, $points, $owner) {
     $id = uniqid("asf");
-    $lastCheck = date('Y-m-d');
-    echo $lastCheck;
+    $lastCheck = date('Y-m-d');    
     $mysqli = dbConnection();
     $sql = "INSERT INTO daily_tasks VALUES ('$id', '$name', '$description', '$points', '$lastCheck', 0, '$owner')";
     $mysqli->query($sql);
@@ -338,6 +339,14 @@ function deleteAccount($name) {
     $mysqli = dbConnection();
     $sql = "DELETE FROM users WHERE userName = '$name'";
     $mysqli->query($sql);
+
+    /*
+    $target_delete = "./templates/uploads/" . "$name";
+    @unlink($target_delete . ".png");
+    @unlink($target_delete . ".jpg");
+    @unlink($target_delete . ".jpeg");
+    @unlink($target_delete . ".gif");
+    */
 }
 
 //Resetea la cuenta del usuario
@@ -363,7 +372,8 @@ function resetAccount($name) {
 function insertMessage($subject, $message, $owner) {    
     $id = uniqid("hgf");
     $mysqli = dbConnection();
-    $sql = "INSERT INTO messages VALUES ('$id', '$subject', '$message', '$owner')";
+    $date = date('Y-m-d');
+    $sql = "INSERT INTO messages VALUES ('$id', '$subject', '$message', '$date', '$owner')";
     $mysqli->query($sql);    
 }
 ?>

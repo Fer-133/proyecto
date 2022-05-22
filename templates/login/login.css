@@ -3,7 +3,18 @@
     --texto: #284b63;    
     --fondo: #ffffff;    
     --title: #d9d9d9;
-    --color5: #3c6e71;
+    /*--color5: #3c6e71;*/
+    --color5:#a0b9ca;
+
+    --glow1: #00b8b6;
+    --glow2: #00fffc;
+    --box-shadow1: rgba(0, 255, 253, .6);
+    --box-shadow2: rgba(0, 255, 253, .5);
+    --box-shadow3: rgba(0, 255, 253, 1);
+    --box-shadow4: rgba(0, 255, 253, .8);
+    --box-shadow5: white;
+    --back: white;
+    --gradient: linear-gradient(#ffffff, #b8b8b8); 
 }
 
 .dark-theme{
@@ -12,12 +23,34 @@
     --texto: #d9d9d9;    
     --fondo: #191A19;
     --title: #3c6e71;
-    --color5: #8b8c89;
+    --color5: #8b8c89;    
+
+    --glow1: #00b8b6;
+    --glow2: #00fffc;
+    --box-shadow1: rgba(0, 255, 253, .2);
+    --box-shadow2: rgba(0, 255, 253, .1);
+    --box-shadow3: rgba(0, 255, 253, .6);
+    --box-shadow4: rgba(0, 255, 253, .4);
+    --box-shadow5: #000;
+    --back: #0B4252;
+    --gradient: linear-gradient(#333933, #222922);
+}
+
+@keyframes box-glow {
+    0% {
+      border-color: var(--glow1);
+      box-shadow: 0 0 5px var(--box-shadow1), inset 0 0 5px var(--box-shadow2), 0 2px 0 var(--box-shadow5);      
+    }	
+    100% {
+      border-color: var(--glow2);
+      box-shadow: 0 0 20px var(--box-shadow3), inset 0 0 10px var(--box-shadow4), 0 2px 0 var(--box-shadow5);    
+    }
 }
 
 body {    
     margin: 0px;
     background-color: var(--fondo);
+    font-family: 'Righteous', cursive;
 }
 
 h1{    
@@ -66,6 +99,7 @@ h1{
     background-color: var(--color5);
     border-radius: 5px;  
     padding: 30px;  
+    width: 230px;    
 }
 
 /*#login*/ input[type="text"], /*#login*/ input[type="password"], input[type="email"] {
@@ -84,11 +118,14 @@ h1{
     background-color: var(--bordes);   
     color: var(--texto); 
     cursor: pointer;
+    font-family: 'Righteous', cursive;
 }
 
 button:hover, input[type="submit"]:hover{
-    background-color: var(--texto);
-    color: var(--bordes);
+    animation: box-glow 1s ease-out infinite alternate;
+    background: var(--back);
+    background: var(--gradient);
+    border-color: var(--glow2);
 }
 
 .popup {
@@ -103,9 +140,10 @@ button:hover, input[type="submit"]:hover{
     text-align: center;    
 }
 
-.popup-content {
-    height: 400px;
+.popup-content {    
+    height: fit-content;
     width: 300px;    
+    /*width: fit-content;*/
     padding: 20px;
     border-radius: 5px;
     border: 5px var(--bordes) solid;
@@ -147,9 +185,19 @@ button:hover, input[type="submit"]:hover{
 .error {
     color: yellow;
     font-weight: bold;
+    font-weight: 100;
 }
 
 .fieldError {
     border: 2px solid red;
     border-radius: 4px;
+}
+
+@media screen and (max-width: 1500px){
+    .options {
+        position: fixed;
+        top: 80%;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
 }

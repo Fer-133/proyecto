@@ -3,7 +3,18 @@
     --texto: #284b63;    
     --fondo: #ffffff;    
     --title: #d9d9d9;
-    --color5: #3c6e71;
+    --color5: white;
+    --color6: #a0b9ca;
+
+    --glow1: #00b8b6;
+    --glow2: #00fffc;
+    --box-shadow1: rgba(0, 255, 253, .6);
+    --box-shadow2: rgba(0, 255, 253, .5);
+    --box-shadow3: rgba(0, 255, 253, 1);
+    --box-shadow4: rgba(0, 255, 253, .8);
+    --box-shadow5: white;
+    --back: white;
+    --gradient: linear-gradient(#ffffff, #b8b8b8); 
 }
 
 .dark-theme{
@@ -12,13 +23,64 @@
     --texto: #d9d9d9;    
     --fondo: #191A19;
     --title: #3c6e71;
-    --color5: #8b8c89;
+    --color5: #191A19;
+    --color6: #191A19;
+    
+    --glow1: #00b8b6;
+    --glow2: #00fffc;
+    --box-shadow1: rgba(0, 255, 253, .2);
+    --box-shadow2: rgba(0, 255, 253, .1);
+    --box-shadow3: rgba(0, 255, 253, .6);
+    --box-shadow4: rgba(0, 255, 253, .4);
+    --box-shadow5: #000;
+    --back: #0B4252;
+    --gradient: linear-gradient(#333933, #222922); 
+}
+
+@keyframes box-glow {
+    0% {
+      border-color: var(--glow1);
+      box-shadow: 0 0 5px var(--box-shadow1), inset 0 0 5px var(--box-shadow2), 0 2px 0 var(--box-shadow5);      
+    }	
+    100% {
+      border-color: var(--glow2);
+      box-shadow: 0 0 20px var(--box-shadow3), inset 0 0 10px var(--box-shadow4), 0 2px 0 var(--box-shadow5);    
+    }
+}
+
+@keyframes box-glow-red {
+    0% {
+      border-color: #b80000;
+      box-shadow: 0 0 5px rgba(255, 0, 0, 0.2), inset 0 0 5px rgba(255, 0, 0, 0.1), 0 2px 0 var(--box-shadow5);      
+    }	
+    100% {
+      border-color: #ff0000;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), inset 0 0 10px rgba(255, 0, 0, 0.4), 0 2px 0 var(--box-shadow5);    
+    }
 }
 
 body {    
     margin: 0px;  
     background-color: var(--fondo);
     color:var(--texto);     
+    font-family: 'Righteous', cursive;    
+}
+
+header {    
+    background-color: var(--bordes);
+    margin-top: 0px;    
+    padding: 0px;
+    display: grid;
+    grid-template-columns: 100%;        
+}
+
+h1 {
+    margin-left: 30px;
+}
+
+#main {
+    display: grid;
+    grid-template-columns: 50% 50%;    
 }
 
 .delete, #confirmDelete {
@@ -28,9 +90,10 @@ body {
 }
 
 .delete:hover, #confirmDelete:hover {
-    color: white;
-    background-color: red;
-    border-color: darkred;
+    animation: box-glow-red 1s ease-out infinite alternate;
+    background: var(--back);
+    background: var(--gradient);
+    border-color: var(--glow2);
 }
 
 .popup-deleteAccount, .popup-resetAccount{
@@ -42,7 +105,8 @@ body {
     display: none;
     justify-content: center;
     align-items: center;
-    text-align: center;    
+    text-align: center;
+        
 }
 
 .popup-deleteAccount-content, .popup-resetAccount-content {
@@ -53,6 +117,7 @@ body {
     border-radius: 5px;
     position: relative;
     border: 5px red solid;
+    border-radius: 30px;
 }
 
 button, input[type="submit"] {
@@ -62,6 +127,7 @@ button, input[type="submit"] {
     font-size: 18px;
     margin: 5px;
     cursor: pointer;
+    font-family: 'Righteous', cursive;
 }
 
 #updateInfo, #sessionAndAccount, #options, #contact, #image {
@@ -70,7 +136,33 @@ button, input[type="submit"] {
     border-right: none;
     margin: 10px;
     padding: 10px;    
-    padding-left: 20px;
+    padding-left: 20px;    
+}
+
+#image form{    
+    margin-left: 10px;
+}
+
+#image input[type="submit"] {
+    margin-top: 20px;
+    margin-left: 0px;
+}
+
+#image input[type="file"] {
+    margin-left: 20px;
+}
+
+#options form {
+    margin-left: 8px;
+}
+
+#contact input[type="submit"], textarea {
+    margin-top: 10px;
+    margin-left: 0px;
+}
+
+#contact form{    
+    margin-left: 10px;
 }
 
 input[type="email"], input[type="password"]{
@@ -85,11 +177,6 @@ select {
    /* height: 18px;*/
     font-size: 16px;    
     margin: 8px;
-}
-
-button:hover, input[type="submit"]:hover{
-    background-color: var(--texto);
-    color: var(--bordes);
 }
 
 .error, .warning{
@@ -110,7 +197,8 @@ a {
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
-    margin-left: 10px;
+    margin-left: 25px;  
+    width:fit-content;  
   }
   
   a span {
@@ -137,3 +225,26 @@ a {
     opacity: 1;
     right: 0;
   }
+
+a:hover, button:hover, input[type="submit"]:hover{
+    animation: box-glow 1s ease-out infinite alternate;
+    background: var(--back);
+    background: var(--gradient);
+    border-color: var(--glow2);
+}
+
+@media screen and (max-width: 798px){
+    #main{        
+        grid-template-columns: 100%;  
+    }
+
+    #message {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 403px){
+    #main{        
+        grid-template-columns: 100%;  
+    }    
+}

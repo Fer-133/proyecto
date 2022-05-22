@@ -4,16 +4,21 @@ script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
 script.type = 'text/javascript';
 document.getElementsByTagName('head')[0].appendChild(script);
 
+var posY;
+
 //Mostrar/esconder popup del borrado de cuenta
 document.getElementById("deleteAccount").addEventListener("click", showDeleteAccount);
 document.getElementById("cancelDeleted").addEventListener("click", hideDeleteAccount);
 
 function showDeleteAccount() {
     document.querySelector(".popup-deleteAccount").style.display = "flex";
+    posY = document.documentElement.scrollTop;
+    window.scrollTo(0, 0);
 }
 
 function hideDeleteAccount() {
-    document.querySelector(".popup-deleteAccount").style.display = "none";    
+    document.querySelector(".popup-deleteAccount").style.display = "none";
+    window.scrollTo(0, posY);    
 }
 
 
@@ -23,10 +28,13 @@ document.getElementById("cancelReset").addEventListener("click", hideResetAccoun
 
 function showResetAccount() {
     document.querySelector(".popup-resetAccount").style.display = "flex";
+    posY = document.documentElement.scrollTop;
+    window.scrollTo(0, 0);
 }
 
 function hideResetAccount() {
-    document.querySelector(".popup-resettAccount").style.display = "none";    
+    document.querySelector(".popup-resetAccount").style.display = "none";  
+    window.scrollTo(0, posY);  
 }
 
 

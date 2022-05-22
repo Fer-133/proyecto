@@ -10,12 +10,12 @@ if(!isset($_SESSION["user"]) || isset($_POST["closeSession"]) /*|| isset($_POST[
     exit;
 } 
 
-$imgPath = "";
+$imgPath = "/proyecto/img/profile.png";
 if(isset($_SESSION["avatar"])){
     if(strcmp($_SESSION["avatar"], "yes") == 0){
-        $imgPath = "/proyecto/templates/uploads/" . $_SESSION["user"] . $_SESSION["avatarExtension"];        
+        $imgPath = "/proyecto/uploads/" . $_SESSION["user"] . $_SESSION["avatarExtension"];        
     } else {
-        $imgPath = "/proyecto/templates/img/profile3.png";
+        $imgPath = "/proyecto/img/profile.png";
     }
 }
 ?>
@@ -27,44 +27,46 @@ if(isset($_SESSION["avatar"])){
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <style>
             @import url(/proyecto/templates/main/main.css);
+            @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
         </style>    
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <script src="/proyecto/templates/main/mainFieldValidator.js"></script>        
 
     </head>
     <body>
-        <header>
+        <header>            
+            <a id="profile" href = "./profile?lang=<?= $_SESSION["lang"] ?>" ><img id="profile-picture" src= <?= $imgPath ?>  width="150" height="150"></a>                      
             <h1>Do it - Tick it</h1>
-            <a href = "./profile?lang=<?= $_SESSION["lang"] ?>" ><!--<?= $lang['profile']?>--> <img src= <?= $imgPath ?>  width="50" height="50"> </a>
-            <h2><?= $lang['welcome']?> <?= $_SESSION["user"]?></h2> 
-            <h3><?= $lang['points']?> <div id='points'></div></h3>            
         </header>
-        
+        <div class="info">
+            <h2><?= $lang['welcome']?> <?= $_SESSION["user"]?></h2> 
+            <h3><?= $lang['points']?> <div id='points'></div> <b id="points-feedback"></b> </h3>  
+        </div>
         <main>        
             <div class="title"><?= $lang['habits']?></div>
             <div id="habits-pannel" class = "pannel">            
-                <button type="button" id="newHabit"><?= $lang['newHabit']?></button>            
+                <button class="new" type="button" id="newHabit"><?= $lang['newHabit']?></button>            
                 <div id="habits">
                 </div>
             </div>
             
             <div class="title"><?= $lang['tasks']?></div>
             <div id="task-pannel" class = "pannel">            
-                <button type="button" id="newTask"><?= $lang['newTask']?></button>
+                <button class="new" type="button" id="newTask"><?= $lang['newTask']?></button>
                 <div id="tasks">
                 </div>
             </div>
 
             <div class="title"><?= $lang['dailyTasks']?></div>
             <div id="dailyTask-pannel" class = "pannel">            
-                <button type="button" id="newDailyTask"><?= $lang['newDailyTask']?></button>
+                <button class="new" type="button" id="newDailyTask"><?= $lang['newDailyTask']?></button>
                 <div id="dailyTasks">
                 </div>
             </div>
 
             <div class="title"><?= $lang['rewards']?></div>
             <div id="rewards-pannel" class = "pannel">            
-                <button type="button" id="newReward"><?= $lang['newReward']?></button>
+                <button class="new" type="button" id="newReward"><?= $lang['newReward']?></button>
                 <div id="rewards">
                 </div>
             </div>
@@ -88,7 +90,7 @@ if(isset($_SESSION["avatar"])){
                     <label for="habitPoints"><?= $lang['rewardPoints']?> </label>
                     <input type="number" id="habitPoints" name="habitPoints" min="1" value="1" required>
                     <input type="submit" id="createHabit" value="<?= $lang['accept']?>" name="createHabit">
-                    <button type="button" id="cancelHabit"><?= $lang['cancel']?></button>                    
+                    <button type="button" class="cancel" id="cancelHabit"><?= $lang['cancel']?></button>                    
                 </form>
                 <div id="habitError" class="error"></div>
             </div>
@@ -109,7 +111,7 @@ if(isset($_SESSION["avatar"])){
                     <label for="taskPoints"><?= $lang['rewardPoints']?> </label>
                     <input type="number" id="taskPoints" name="taskPoints" min="1" value="1" required>
                     <input type="submit" id="createTask" value="<?= $lang['accept']?>" name="createTask">
-                    <button type="button" id="cancelTask"><?= $lang['cancel']?></button>                    
+                    <button type="button" class="cancel" id="cancelTask"><?= $lang['cancel']?></button>                    
                 </form>
                 
                 <div id="taskError" class="error"></div>
@@ -130,7 +132,7 @@ if(isset($_SESSION["avatar"])){
                     <label for="dailyTaskPoints"><?= $lang['rewardPoints']?> </label>
                     <input type="number" id="dailyTaskPoints" name="dailyTaskPoints" min="1" value="1" required>
                     <input type="submit" id="createDailyTask" value="<?= $lang['accept']?>" name="createDailyTask">
-                    <button type="button" id="cancelDailyTask"><?= $lang['cancel']?></button>
+                    <button type="button" class="cancel" id="cancelDailyTask"><?= $lang['cancel']?></button>
                 </form>        
                 <div id="dailyTaskError" class="error"></div>                  
             </div>
@@ -148,9 +150,9 @@ if(isset($_SESSION["avatar"])){
                     <label for="rewardPrice"><?= $lang['price']?> </label>
                     <input type="number" id="rewardPrice" name="rewardPrice" min="1" value="1" required>
                     <input type="submit" id="createReward" value="<?= $lang['accept']?>" name="createReward">
-                    <button type="button" id="cancelReward"><?= $lang['cancel']?></button>
+                    <button type="button" class="cancel" id="cancelReward"><?= $lang['cancel']?></button>
                 </form>    
-                <div id="rewardNameError" class="error"></div>
+                <div id="rewardError" class="error"></div>
             </div>
         </div>
         
@@ -177,7 +179,7 @@ if(isset($_SESSION["avatar"])){
                     <input type="number" id="newHabitPoints" name="newHabitPoints" min="1" value="1" required>
                     <input type="hidden" id="habitId" name="habitId" value="">
                     <input type="submit" id="editHabit" value="<?= $lang['edit']?>" name="editHabit">
-                    <button type="button" id="cancelHabitEdition"><?= $lang['cancel']?></button>                    
+                    <button type="button" class="cancel" id="cancelHabitEdition"><?= $lang['cancel']?></button>                    
                 </form>
                 <div id="habitEditionError" class="error"></div>
             </div>
@@ -198,7 +200,7 @@ if(isset($_SESSION["avatar"])){
                     <input type="number" id="newTaskPoints" name="newTaskPoints" min="1" value="1" required>
                     <input type="hidden" id="taskId" name="taskId" value="">
                     <input type="submit" id="editTask" value="<?= $lang['edit']?>" name="editTask">
-                    <button type="button" id="cancelTaskEdition"><?= $lang['cancel']?></button>                    
+                    <button type="button" class="cancel" id="cancelTaskEdition"><?= $lang['cancel']?></button>                    
                 </form>
                 
                 <div id="taskEditionError" class="error"></div>
@@ -220,7 +222,7 @@ if(isset($_SESSION["avatar"])){
                     <input type="number" id="newDailyTaskPoints" name="newDailyTaskPoints" min="1" value="1" required>
                     <input type="hidden" id="dailyTaskId" name="dailyTaskId" value="">
                     <input type="submit" id="editDailyTask" value="<?= $lang['edit']?>" name="editDailyTask">
-                    <button type="button" id="cancelDailyTaskEdition"><?= $lang['cancel']?></button>
+                    <button type="button" class="cancel" id="cancelDailyTaskEdition"><?= $lang['cancel']?></button>
                 </form>        
                 <div id="dailyTaskEditionError" class="error"></div>                  
             </div>
@@ -238,15 +240,12 @@ if(isset($_SESSION["avatar"])){
                     <input type="number" id="newRewardPrice" name="newRewardPrice" min="1" value="1" required>
                     <input type="hidden" id="rewardId" name="rewardId" value="">
                     <input type="submit" id="editReward" value="<?= $lang['edit']?>" name="editReward">
-                    <button type="button" id="cancelRewardEdition"><?= $lang['cancel']?></button>
+                    <button type="button" class="cancel" id="cancelRewardEdition"><?= $lang['cancel']?></button>
                 </form>    
                 <div id="rewardNameEditionError" class="error"></div>
             </div>
         </div>
-
-
-
-
+        
         <script src="/proyecto/templates/main/mainFuncionality.js"></script>
     </body>
 </html>

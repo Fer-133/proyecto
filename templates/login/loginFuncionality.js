@@ -21,6 +21,11 @@ function hideRegistration() {
     document.getElementById("emailError").innerHTML = "";
     document.getElementById("npassError").innerHTML = "";
     document.getElementById("cpassError").innerHTML = "";
+
+    document.getElementById("nuser").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("npass").value = "";
+    document.getElementById("cpass").value = "";
 }
 
 
@@ -28,7 +33,7 @@ function hideRegistration() {
 if(localStorage.getItem('dark-theme')) {
     document.body.classList.add('dark-theme');
     var col = document.getElementById("color");
-    col.src = "/proyecto/templates/img/sun.png";    
+    col.src = "/proyecto/img/sun.png";    
 }
 
 //Al pulsar el boton se cambia el tema de la web de claro a oscuro o viceversa
@@ -39,16 +44,14 @@ function changeColor(){
     
     
     if(document.body.classList.contains("dark-theme")) {
-
         localStorage.setItem('dark-theme', true);    
         var col = document.getElementById("color");
-        col.src = "/proyecto/templates/img/sun.png";        
+        col.src = "/proyecto/img/sun.png";        
 
     } else {
-
         localStorage.removeItem('dark-theme');   
         var col = document.getElementById("color");
-        col.src = "/proyecto/templates/img/moon.png";        
+        col.src = "/proyecto/img/moon.png";        
     }
 }
 
@@ -70,11 +73,6 @@ $(document).ready(function(){
             $("#nuserError").html(errorMessage);
             //$("#nuser").removeClass("resultados");
             $("#nuser").html("");
-
-
-
-
-
 
 /*
             if($("#nuserError").html() != ""){

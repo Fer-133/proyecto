@@ -19,4 +19,9 @@ function isValidText($text) {
     $pattern = "/^[a-zñáéíóúA-ZÑÁÉÍÓÚ0-9\s]*$/";
     return (preg_match($pattern, $text));
 }
+
+function isValidTextMessage($text) {
+    $pattern = "/^[a-zñáéíóúA-ZÑÁÉÍÓÚ,.:;!¡¿?0-9\s]*$/";
+    return (preg_match($pattern, $text));
+}
 ?>

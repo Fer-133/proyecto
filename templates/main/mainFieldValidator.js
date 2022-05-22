@@ -21,8 +21,8 @@ function validateText(text, error) {
 
     }
 
-    if(ok) {
-        return true;
+    if(ok) {        
+        return true;        
     } else {
         error.innerHTML = errorMessage;
         return false;
@@ -37,7 +37,7 @@ function validateHabit() {
 
     var okText = validateText(habitName, error);    
         
-    if (okText) {        
+    if (okText) {             
         return true;
     } else {
         return false;
@@ -52,7 +52,7 @@ function validateHabitEdition() {
 
     var okText = validateText(habitName, error);    
         
-    if (okText) {        
+    if (okText) {               
         return true;
     } else {
         return false;
@@ -69,7 +69,7 @@ function validateTask() {
     var okName = validateText(taskName, error);    
     var okDescription = validateText(taskDescription, error);        
         
-    if (okName && okDescription) {        
+    if (okName && okDescription) {            
         return true;
     } else {
         return false;
@@ -86,7 +86,7 @@ function validateTaskEdition() {
     var okName = validateText(taskName, error);    
     var okDescription = validateText(taskDescription, error);        
         
-    if (okName && okDescription) {        
+    if (okName && okDescription) {              
         return true;
     } else {
         return false;
@@ -104,7 +104,7 @@ function validateDailyTask() {
     var okName = validateText(dailyTaskName, error);    
     var okDescription = validateText(dailyTaskDescription, error);    
         
-    if (okName && okDescription) {        
+    if (okName && okDescription) {             
         return true;
     } else {
         return false;
@@ -122,7 +122,7 @@ function validateDailyTaskEdition() {
     var okName = validateText(dailyTaskName, error);    
     var okDescription = validateText(dailyTaskDescription, error);    
         
-    if (okName && okDescription) {        
+    if (okName && okDescription) {           
         return true;
     } else {
         return false;
@@ -134,11 +134,11 @@ function validateDailyTaskEdition() {
 y false si no los cumplen*/
 function validateReward() {  
     var rewardName = document.getElementById("rewardName").value;
-    var errorName = document.getElementById("rewardNameError");   
+    var errorName = document.getElementById("rewardError");   
 
     var okName = validateText(rewardName, errorName);    
         
-    if (okName) {        
+    if (okName) {                
         return true;
     } else {
         return false;
@@ -153,7 +153,7 @@ function validateRewardEdition() {
 
     var okName = validateText(rewardName, errorName);    
         
-    if (okName) {        
+    if (okName) {               
         return true;
     } else {
         return false;

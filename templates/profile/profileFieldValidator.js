@@ -145,6 +145,37 @@ function validateText(text, error) {
     }
 }
 
+/*validateTextMessage acepta los parametros text y errot que son los elementos del DOM
+referentes a distintos textos si cumple
+la expresión regular devuelve true, sino la cumple devuelve false e introduce
+un mensaje de error*/
+
+function validateTextMessage(text, error) {
+    var ok = false;
+    var errorMessage = "";
+    var text = text;
+    var error = error;
+    
+    if (/^[a-zñáéíóúA-ZÑÁÉÍÓÚ,.:;!¡¿?0-9\s]*$/.test(text)) {
+        ok = true;
+    } else {
+
+        if (window.location.href.slice(-2) == "en") {
+            errorMessage = "The fields accepts only letters, numbers, spaces and punctuation, question and exclamation marks.";            
+        } else {
+            errorMessage = "Los campos sólo admite letras, numeros, espacios y signos de puntuación, interrogación y exclamación.";
+        }
+
+    }
+
+    if(ok) {
+        return true;
+    } else {
+        error.innerHTML = errorMessage;
+        return false;
+    }
+}
+
 /*validateInfoUpdate devuelve true si todos los campos de la actualización
 cumplen los requisitos y false si no los cumplen*/
 function validateInfoUpdate() {    
@@ -170,8 +201,8 @@ function validateMessage(){
     var message = document.getElementById("message").value;
     var error = document.getElementById("messageError");
 
-    var okSubject = validateText(subject, error);
-    var okMessage = validateText(message, error);
+    var okSubject = validateTextMessage(subject, error);
+    var okMessage = validateTextMessage(message, error);
 
     if (okSubject && okMessage) {
         if (window.location.href.slice(-2) == "en") {

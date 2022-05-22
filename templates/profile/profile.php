@@ -17,24 +17,16 @@ if(!isset($_SESSION["user"])){
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <style>
             @import url(/proyecto/templates/profile/profile.css);
+            @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
          <script src="/proyecto/templates/profile/profileFieldValidator.js"></script>
     </head>
     <body>
-    <h1><?= $lang['thisIsProfile']?> <?= $_SESSION["user"]?></h1>
+    <header>
+        <h1><?= $_SESSION["user"]?><?= $lang['thisIsProfile']?></h1>
+    </header>
         <div id="main">
-
-            <div id="sessionAndAccount">
-                <h3><?= $lang['sessionAndAccount']?></h3>
-                <form action = "" method="POST">                        
-                        <input type = "submit" value="<?= $lang['closeSession']?>" name="closeSession"/>
-                        </br>                        
-                        <button type="button" id="resetAccount" class="reset"><?= $lang['resetAccount']?></button>
-                        </br>
-                        <button type="button" id="deleteAccount" class="delete"><?= $lang['deleteAccount']?></button>                        
-                </form>
-            </div>
 
             <div id="updateInfo">     
                 <h3><?= $lang['updateInfo']?></h3>
@@ -57,6 +49,15 @@ if(!isset($_SESSION["user"])){
                 </form>
             </div>
             
+            <div id="contact">            
+                <h3><?= $lang['contactTheDevelopers']?></h3>
+                <form action = "" method="POST" onsubmit = "return validateMessage()">                    
+                    <input type="text" id="subject" name="subject" placeholder="<?= $lang['subject']?>" required/><br>
+                    <textarea id="message" name="message" placeholder="<?= $lang['message']?>" rows="10" cols="50" maxlength=500 required></textarea><br>
+                    <input type = "submit" value="<?= $lang['send']?>" name="sendMessage"/>
+                </form>
+                <div id="messageError" class="error"></div>
+            </div>
 
             <div id="options">
                 <h3><?= $lang['options']?></h3>
@@ -90,25 +91,20 @@ if(!isset($_SESSION["user"])){
 
                     <br/>
                     <input type = "submit" value="<?= $lang['saveImage']?>" name="saveImage"/>
-                    
-                    <!--
-                        <input type="file" name="fileToUpload" id="fileToUpload">
-                        <input type="submit" value="Upload Image" name="submit">
-                    -->
+                                        
                 </form>
             </div>
 
-
-            <div id="contact">            
-                <h3><?= $lang['contactTheDevelopers']?></h3>
-                <form action = "" method="POST" onsubmit = "return validateMessage()">                    
-                    <input type="text" id="subject" name="subject" placeholder="<?= $lang['subject']?>" required/><br>
-                    <textarea id="message" name="message" placeholder="<?= $lang['message']?>" rows="10" cols="50" maxlength=500 required></textarea><br>
-                    <input type = "submit" value="<?= $lang['send']?>" name="sendMessage"/>
+            <div id="sessionAndAccount">
+                <h3><?= $lang['sessionAndAccount']?></h3>
+                <form action = "" method="POST">                        
+                        <input type = "submit" value="<?= $lang['closeSession']?>" name="closeSession"/>
+                        </br>                        
+                        <button type="button" id="resetAccount" class="reset"><?= $lang['resetAccount']?></button>
+                        </br>
+                        <button type="button" id="deleteAccount" class="delete"><?= $lang['deleteAccount']?></button>                        
                 </form>
-                <div id="messageError" class="error"></div>
             </div>
-
 
         </div>   
         

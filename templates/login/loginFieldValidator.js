@@ -5,11 +5,11 @@ un mensaje de error*/
 
 function validateUser(u, ur) {
     var ok = false;
-    var errorMessage = ""    ;
+    var errorMessage = "";
     var user = u;
     var error = ur;
     
-    error.innerHTML = "";
+    //error.innerHTML = "";
 
     if (/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9_.-]{3,15}$/.test(user)) {
         ok = true;
@@ -25,7 +25,7 @@ function validateUser(u, ur) {
 
     if(ok) {
         return true;
-    } else {
+    } else {        
         error.innerHTML = errorMessage;
         return false;
     }
@@ -40,7 +40,7 @@ function validateEmail() {
     var email = document.getElementById("email").value;
     var error = document.getElementById("emailError");
     
-    error.innerHTML = "";
+    //error.innerHTML = "";
 
     if (/^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
         ok = true;
@@ -71,7 +71,7 @@ function validatePass(p, pr) {
     var pass = p;
     var error = pr;
     
-    error.innerHTML = "";
+    //error.innerHTML = "";
 
     if (/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(pass)) {
         ok = true;
@@ -102,7 +102,7 @@ function validatePassEquality() {
     var cpass = document.getElementById("cpass").value;
     var error = document.getElementById("cpassError");
     
-    error.innerHTML = "";
+    //error.innerHTML = "";
 
     if (npass.localeCompare(cpass) === 0) {
         ok = true;
@@ -147,9 +147,9 @@ function validateRegistration() {
 y false si no los cumplen*/
 function validateLogIn() {  
     var user = document.getElementById("user").value;
-    var userError = document.getElementById("userError");
+    var userError; //= document.getElementById("userError");
     var pass = document.getElementById("pass").value;
-    var passError = document.getElementById("passError");
+    var passError; //= document.getElementById("passError");
 
     var okUser = validateUser(user, userError);    
     var okPass = validatePass(pass, passError);

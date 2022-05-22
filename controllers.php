@@ -13,7 +13,13 @@ require_once("model.php");
 if(isset($_GET["nuser"])) {
     $name = $_GET["nuser"];    
     if (checkUserDuplicity($name)) {
-        echo "Ya existe una cuenta con ese nombre";
+
+        if (strcmp($_SESSION["lang"], "es")){
+            echo "There is already an account with that name."; 
+        } else {
+            echo "Ya existe una cuenta con ese nombre.";
+        }
+        //echo "Ya existe una cuenta con ese nombre";
     } else {
         return null;
         //echo "";
@@ -24,7 +30,12 @@ if(isset($_GET["nuser"])) {
 if(isset($_GET["email"])) {
     $email = $_GET["email"];    
     if (checkEmailDuplicity($email)) {
-        echo "Ya existe una cuenta con ese email";
+        if (strcmp($_SESSION["lang"], "es")){
+            echo "There is already an account with that email."; 
+        } else {
+            echo "Ya existe una cuenta con ese email.";
+        }
+        //echo "Ya existe una cuenta con ese email";
     } else {
         echo "";
     }
@@ -259,31 +270,39 @@ function index_controller() {
     require "templates/login/" . $_SESSION['lang'] . ".php";    
     require "templates/login/login.php";         
     require "validators.php";
-
+/*
     if (!isset($_COOKIE["theme"])) {
         $theme = "light";
     } else {
         $theme = $_COOKIE["theme"];
     }
-    
+*/
     //Procesamiento del registro de un usuario nuevo
     if(isset($_POST["register"])){
         if (isEmail($_POST["email"]) && checkUserDuplicity($_POST["nuser"])){
 
-            echo "<script type='text/javascript'>alert('Ese nombre de usuario ya existe');</script>";
+            if (strcmp($_SESSION["lang"], "es")){
+                echo "<script type='text/javascript'>alert('There is already an account with that name');</script>";
+            } else {
+                echo "<script type='text/javascript'>alert('Ese nombre de usuario ya existe');</script>";
+            }
+            //echo "<script type='text/javascript'>alert('Ese nombre de usuario ya existe');</script>";
 
         } else if (isValidUserName($_POST["nuser"]) && checkEmailDuplicity($_POST["email"])) {
 
-            echo "<script type='text/javascript'>alert('Ya existe una cuenta con ese email');</script>";    
+            if (strcmp($_SESSION["lang"], "es")){
+                echo "<script type='text/javascript'>alert('There is already an account with that email');</script>";
+            } else {
+                echo "<script type='text/javascript'>alert('Ya existe una cuenta con ese email');</script>";
+            }
+
+            //echo "<script type='text/javascript'>alert('Ya existe una cuenta con ese email');</script>";    
 
         } else if(isEmail($_POST["email"]) && isValidUserName($_POST["nuser"]) && isValidPass($_POST["npass"]) && strcmp($_POST["npass"], $_POST["cpass"]) === 0) {       
             
-            echo "pasa 1";
-
-            register($_POST["nuser"], $_POST["email"], $_POST["npass"], $_SESSION["lang"], $theme);
+            register($_POST["nuser"], $_POST["email"], $_POST["npass"], $_SESSION["lang"], "no");
             $_SESSION["user"] = $_POST["nuser"];
-
-            echo "pasa 2";
+            //setcookie("theme", $theme);
             
             header('Location: /proyecto/index.php/main?lang=' . $_SESSION["lang"]);
             
@@ -299,22 +318,32 @@ function index_controller() {
                 echo "<script type='text/javascript'>alert('Validado');</script>";    
                 */
                 $_SESSION["user"] = $_POST["user"];
-
                 setcookie("theme", getTheme($_SESSION["user"]));
                 
                 header('Location: /proyecto/index.php/main?lang=' . getLanguage($_SESSION["user"]));
                 
                 exit;
             } else {
-                echo "<script type='text/javascript'>alert('Usuario o contraseña erroneo');</script>";
+                
+                if (strcmp($_SESSION["lang"], "es")){
+                    echo "<script type='text/javascript'>alert('Wrong username or password');</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('Usuario o contraseña erroneo');</script>";
+                }
+
+                //echo "<script type='text/javascript'>alert('Usuario o contraseña erroneo');</script>";
             }
         } else {
-            echo "<script type='text/javascript'>alert('Usuario o contraseña erroneo');</script>";    
+            if (strcmp($_SESSION["lang"], "es")){
+                echo "<script type='text/javascript'>alert('Wrong username or password');</script>";
+            } else {
+                echo "<script type='text/javascript'>alert('Usuario o contraseña erroneo');</script>";
+            }    
         }
     } 
 }
 
-//CONTROLADOR DE PRUEBA
+//CONTROLADOR DE MAIN
 function main_controller() { 
 
     if(getAvatarExtension($_SESSION["user"])){
@@ -398,19 +427,38 @@ function profile_controller(){
 
         if (isEmail($_POST["email"]) && checkEmailDuplicity($_POST["email"])) {
 
-            echo "<script type='text/javascript'>alert('Ya existe una cuenta con ese email');</script>";    
+            if (strcmp($_SESSION["lang"], "en")){
+                echo "<script type='text/javascript'>alert('Ya existe una cuenta con ese email');</script>";    
+            } else {
+                echo "<script type='text/javascript'>alert('An account already exists with this email address');</script>";    
+            }
+            
 
         } else if (!checkCorrectPass($_SESSION["user"], $_POST["apass"])){
-
-            echo "<script type='text/javascript'>alert('Contraseña actual incorrecta');</script>";    
+            
+            if (strcmp($_SESSION["lang"], "en")){
+                echo "<script type='text/javascript'>alert('Contraseña actual incorrecta');</script>";     
+            } else {
+                echo "<script type='text/javascript'>alert('Incorrect current password');</script>";    
+            }   
         
         } else if ($_POST["npass"] === "" && $_POST["email"] === ""){
 
-            echo "<script type='text/javascript'>alert('Es necesario actualizar al menos uno de los campos');</script>";    
+            if (strcmp($_SESSION["lang"], "en")){
+                echo "<script type='text/javascript'>alert('Es necesario actualizar al menos uno de los campos');</script>";
+            } else {
+                echo "<script type='text/javascript'>alert('It is necessary to update at least one of the fields');</script>";    
+            }   
 
         } else if(isEmail($_POST["email"]) || $_POST["email"] === "" && isValidPass($_POST["npass"]) || $_POST["npass"] === "" && strcmp($_POST["npass"], $_POST["cpass"]) === 0 ) {       
             
-            updateUser($_SESSION["user"], $_POST["email"], $_POST["npass"]);
+            if(updateUser($_SESSION["user"], $_POST["email"], $_POST["npass"])){
+                if (strcmp($_SESSION["lang"], "en")){
+                    echo "<script type='text/javascript'>alert('Información actualizada correctamente');</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('Info updated correctly');</script>";    
+                }  
+            }
 
         }
     }
@@ -419,28 +467,36 @@ function profile_controller(){
     if(isset($_POST["saveOptions"])){
         saveOptions($_SESSION["user"], $_POST["language"], $_POST["theme"]);
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     //Procesamiento de la subida de la imagen de avatar
     if(isset($_POST["saveImage"])) {
+
+        $error = "";
         
         $path = $_FILES["uploadedImage"]["name"];
         $ext = "." . pathinfo($path, PATHINFO_EXTENSION);
         
-        $target_dir = "./templates/uploads/";
-        //$target_file = $target_dir . basename($_FILES["uploadedImage"]["name"]);
+        $target_dir = "./uploads/";        
         $target_file = $target_dir . $_SESSION["user"] . $ext;
+        $target_delete = $target_dir . $_SESSION["user"];
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-        // Check if image file is a actual image or fake image
-        if(isset($_POST["saveImage"])) {
+        // Se comprueba si lo que se quiere subir es una imagen
+        if(isset($_POST["saveImage"]) && $_FILES["uploadedImage"]["error"] != 4) {
             $check = getimagesize($_FILES["uploadedImage"]["tmp_name"]);
             if($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
+                //echo "File is an image - " . $check["mime"] . ".";
                 $uploadOk = 1;
             } else {
-                echo "File is not an image.";
+                //echo "File is not an image.";
+                
+                if (strcmp($_SESSION["lang"], "es")){
+                    $error = "File is not an image. ";
+                } else {
+                    $error = "El archivo no es una imagen. ";
+                }
                 $uploadOk = 0;
             }
         }
@@ -453,38 +509,70 @@ function profile_controller(){
         }
         */
 
-        // Check file size
-        if ($_FILES["uploadedImage"]["size"] > 500000) {
-            echo "Sorry, your file is too large.";
+        // Se comprueba el tamaño de la imagen a subit
+        if ($_FILES["uploadedImage"]["size"] > 50000 && $uploadOk != 0) {
+            //echo "Sorry, your file is too large.";
+
+            if (strcmp($_SESSION["lang"], "es")){
+                $error = $error . "Your file is too large, the maximum size is 50kb. ";
+            } else {
+                $error = $error . "La imagen que quieres subir es muy pesada, el tamaño maximo es de 50kb. ";
+            }
             $uploadOk = 0;
         }
 
-        // Allow certain file formats
-            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif" ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        // Se comprueba que el formato del archivo a subir sea el de una imagen
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $uploadOk != 0) {
+            //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+
+            if (strcmp($_SESSION["lang"], "es")){
+                $error = $error . "Only JPG, JPEG, PNG & GIF files are allowed. ";
+            } else {
+                $error = $error . "Solo se admiten archivos JPG, JPEG, PNG y GIF. ";
+            }
             $uploadOk = 0;
         }
 
-        // Check if $uploadOk is set to 0 by an error
+        // Si uploadOk es igual a 0 no se sube la imagen
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
+            //echo "Sorry, your file was not uploaded.";
+            if (strcmp($_SESSION["lang"], "es")){
+                $error = $error . "Sorry, your picture was not uploaded.";
+            } else {
+                $error = $error . "Tu imagen no se ha subido.";
+            }
+
+            echo "<script type='text/javascript'>alert('$error');</script>"; 
+        // Si todo es correcto se sube la imagen
         } else {
+
+            @unlink($target_delete . ".png");
+            @unlink($target_delete . ".jpg");
+            @unlink($target_delete . ".jpeg");
+            @unlink($target_delete . ".gif");
             if (move_uploaded_file($_FILES["uploadedImage"]["tmp_name"], $target_file)) {
-                echo "The file ". htmlspecialchars( basename( $_FILES["uploadedImage"]["name"])). " has been uploaded.";
+
+                if (strcmp($_SESSION["lang"], "es")){
+                    echo "<script type='text/javascript'>alert('Avatar changed successfully.');</script>"; 
+                } else {
+                    echo "<script type='text/javascript'>alert('Avatar cambiado correctamente.');</script>"; 
+                }
+                //echo "The file ". htmlspecialchars( basename( $_FILES["uploadedImage"]["name"])). " has been uploaded.";
                 setAvatarExtension($_SESSION["user"], $ext);
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                //echo "Sorry, there was an error uploading your file.";
+                if (strcmp($_SESSION["lang"], "es")){
+                    echo "<script type='text/javascript'>alert('Sorry, there was an error uploading your file.');</script>"; 
+                } else {
+                    echo "<script type='text/javascript'>alert('Ha habido un error al subir su archivo.');</script>"; 
+                }
             }
         }
     }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     //Procesamiento del envio de un mensaje a los desarrolladores
     if (isset($_POST["sendMessage"])) {
-        if (isValidText($_POST["subject"]) && isValidText($_POST["message"])) {
+        if (isValidTextMessage($_POST["subject"]) && isValidTextMessage($_POST["message"])) {
             insertMessage($_POST["subject"], $_POST["message"],$_SESSION["user"]);
         }
     }    
